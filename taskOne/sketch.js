@@ -10,11 +10,13 @@ const USE_OFFLINE_MOCK = false;
 
 let aquariumData = null;
 let lastUpdated = "";
+let water;
 
 function preload() {
   // Load initial data before setup() runs
   let endpoint = USE_OFFLINE_MOCK ? "sample-data.json" : PROXY_URL;
   aquariumData = loadJSON(endpoint, onDataLoaded, onError);
+  water = loadImage('fish.gif'); 
 }
 
 function setup() {
@@ -39,7 +41,7 @@ function onError(err) {
 }
 
 function draw() {
-  background(20, 30, 45); // Dark blue aquarium background
+  background(water);  // Dark blue aquarium background
 
   // 1. Draw Title Header
   fill(255);
