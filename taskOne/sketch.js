@@ -43,22 +43,28 @@ function onError(err) {
 function draw() {
   background(water);  // Dark blue aquarium background
 
-  // 1. Draw Title Header
+  push();
+  colorMode(HSB, 360, 100, 100);
+  let currentHue = frameCount% 360;
+  fill(currentHue, 70, 80);
+  rect(100,20, 335, 35, 8);
+  colorMode(RGB,255);
   fill(255);
   textSize(24);
   textAlign(LEFT, TOP);
-  text("Fish Environment Dashboard", 30, 30);
+  text("Fish Environment Dashboard", 105, 25);
+  pop();
+
+  textAlign(LEFT, BASELINE);
 
   // Display connection status
   textSize(12);
-  fill(150, 200, 255);
-  text("Last updated: " + (lastUpdated || "Loading..."), 30, 65);
-
+  textAlign(LEFT, TOP);
+  fill(150, 0, 400);
+  text("Last updated: " + (lastUpdated || "Loading..."), 100, 65);
 
   // 2. Render Dashboard Graphics3
   if (aquariumData) {
-    // NOTE: Update these keys based on your actual Seneye JSON response structure!
-    // Example fields commonly found in sensor data:
     let temp = aquariumData[0].exps.temperature.curr;
     let temp2 = aquariumData[0].exps.temperature.avg;
     let ph = aquariumData[0].exps.ph.curr;
@@ -70,15 +76,33 @@ function draw() {
     drawTempWidget(50, 120, temp, temp2);
     drawGauge2Widget(300, 120, "pH Level", ph, ph2);
     drawGaugeWidget(550, 120, "Ammonia (NH3)", nh3, nh3two);
-    if(ph >= 8)
+    if(ph <= 6.5 || ph >= 8.2)
     {
     textSize(24);
     fill(255, 116, 108)
     textAlign(RIGHT,BOTTOM)
-    text("SAVE THE FISH", 480, 305);
+    text("Check the PH!", 480, 305);
     }
-  
+    if(temp <= 20.00 || temp >= 28.00 )
+    {
+    textSize(24);
+    fill(255, 116, 108)
+    textAlign(RIGHT,BOTTOM)
+    text("Check the TEMP!", 250, 305);
+    }
+    if(nh3 >= 0.05)
+    {
+    textSize(24);
+    fill(255, 116, 108)
+    textAlign(RIGHT,BOTTOM)
+    text("Check the NH3!", 720, 305);
+    }
   }
+
+  drawFish(50, 35, 0.5);
+  drawFish(730, 40, 1.0);
+  drawFish(60, 440, 1.0);
+  drawFish(730, 440, 1.0);
 }
 // Example Widget Function: Temperature Card
 function drawTempWidget(x, y, tempVal, temp2Val) {
@@ -140,6 +164,33 @@ function drawGaugeWidget(x, y, label, val, nh3two) {
   fill(255, 192, 203);
   textSize(16);
   text("Average: " + nh3two, x + 15, y + 100);
+}
+
+function drawFish(x, y, s = 1.0) {
+  push();
+  translate(x, y);
+  scale(s); 
+
+
+  fill(255, 120, 80);
+  noStroke();
+  triangle(30, 0, 60, -20, 60, 20);
+
+  // Body
+  fill(255, 150, 100);
+  ellipse(0, 0, 80, 50);
+
+  // Eye
+  fill(255);
+  circle(-20, -5, 12);
+  fill(0);
+  circle(-22, -5, 5);
+
+  // Side Fin
+  fill(255, 120, 80);
+  triangle(0, 5, 15, -5, 10, 15);
+
+  pop();
 }
 
 
