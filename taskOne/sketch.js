@@ -83,7 +83,7 @@ function draw() {
     textAlign(RIGHT,BOTTOM)
     text("Check the PH!", 480, 305);
     }
-    if(temp <= 20.00 || temp >= 28.00 )
+    if(temp <= 20.00 || temp >= 28.00 ) 
     {
     textSize(24);
     fill(255, 116, 108)
