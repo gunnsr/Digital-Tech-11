@@ -11,6 +11,7 @@ data = response.json()
 product_name = data.get("product", {}).get("product_name", "Product name not found")
 ingredients = data.get("product", {}).get("ingredients_text_en", "Product name not found")
 quantity = data.get("product", {}).get("product_quantity", "Product name not found")
+type = data.get("product", {}).get("product_type", "Product name not found")
 
 
 
@@ -29,7 +30,8 @@ def main():
         if choice == '1':
             print(f"Product Name: {product_name}")
             print(f"Ingredients: {ingredients}")
-            print(f"Quantity: {quantity} ")
+            print(f"Quantity: {quantity}")
+            print(f"Type: {type}")
         elif choice == "2":
             break
         else:
